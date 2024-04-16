@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width" , initial-scale=1, viewport-fit="cover">
+
+	{% block title %}
+	    <title>POLYU FYPCTF</title>
+	{% endblock %}
+	<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/bootstrap.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/navigationbar.css' %}">
+	<link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
+	<script type="text/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+	{% block css %}
+	{% endblock %}
+</head>
+<body>
+    {% include "navbar.html" %}
+	{% block main %}
+	{% endblock %}
+	<!--<div id="footer">
+	</div>-->
+	<script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
+</body>
+</html>

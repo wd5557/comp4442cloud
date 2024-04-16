@@ -1,0 +1,46 @@
+/* user.css */
+.user-list {
+    margin: 20px;
+    padding: 10px;
+    background-color: #666666; /* Set the background color to #666666 */
+    border-radius: 8px;
+}
+
+.user-detail,
+.user-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding: 10px;
+}
+
+.user-count,
+.user-username,
+.user-email {
+    margin: 0;
+    color: #FFFFFF; /* Set the text color to #FFFFFF */
+}
+
+.user-count {
+    min-width: 50px; /* Ensures enough space for 'No.' and the count */
+    text-align: left;
+}
+
+.user-username {
+    flex-grow: 1;
+    text-align: left;
+    margin-left: 10%;
+}
+
+.user-email {
+    flex-grow: 1;
+    text-align: right;
+    font-style: italic;
+    margin-right:20%;
+}
+
+.user-heading {
+    font-weight: bold;
+    text-transform: uppercase;
+}

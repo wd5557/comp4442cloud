@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    <title>All Driver</title>
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/user.css' %}">
+{% endblock %}
+
+{% block main %}
+    <div id="pageHeading">
+        <p>All Driver</p>
+    </div>
+
+    <div class="user-list">
+        <div class="user-detail user-heading">
+            <strong class="user-count">No.</strong>
+            <strong class="user-username">DriverID</strong>
+            <strong class="user-email">car Plate Number</strong>
+        </div>
+        {% for drivers in driver_list %}
+            <div class="user-info">
+                <span class="user-count">{{ forloop.counter }}.</span>
+                <p class="user-username"><a href="/monitor/{{ drivers.driverID }}">{{ drivers.driverID }}</a></p>
+                <p class="user-email">{{ drivers.carPlateNumber }}</p>
+            </div>
+        {% empty %}
+            <p>No users found.</p>
+        {% endfor %}
+    </div>
+
+{% endblock %}

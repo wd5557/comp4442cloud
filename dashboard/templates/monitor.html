@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    <title>Driving Behavior Analysis System (DBAS)</title>
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/user.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <style>
+            .alert {
+              color: #842029;
+              background-color: #f8d7da;
+              border-color: #f5c2c7;
+              position: relative;
+              padding: 1rem 1rem;
+              margin-bottom: 1rem;
+              border: 1px solid transparent;
+              border-radius: .25rem;
+            }
+
+            .bd-placeholder-img {
+              font-size: 1.125rem;
+              text-anchor: middle;
+              -webkit-user-select: none;
+              -moz-user-select: none;
+              user-select: none;
+            }
+    </style>
+{% endblock %}
+
+{% block main %}
+    <div id="pageHeading">
+        <p>Real Time Monitor</p>
+    </div>
+
+    <div class="container">
+
+
+        <div class="bg-light p-5 rounded">
+          <div id="container" style="min-width:400px;height:400px"></div>
+
+          <div id="alert_area">
+          </div>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a class="btn btn-secondary btn-sm" href="/driver" role="button">Choose another driver</a>
+          </div>
+        </div>
+
+      </div>
+
+    <script type="text/javascript">
+    const MONTH_NAME = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const TIME_INTERVAL = 30;
+    var current_time = 1483459530*1000;
+
+    function convertUnixTime(unix) {
+        let a = new Date(unix * 1000);
+        let year = a.getFullYear();
+        let month = MONTH_NAME[a.getMonth()];
+        let date = a.getDate();
+        let hour = a.getHours();
+        let min = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes();
+        let sec = a.getSeconds() < 10 ? '0' + a.getSeconds() : a.getSeconds();
+        return `${month} ${date}, ${year}, ${hour}:${min}:${sec}`;
+    }
+
+    function add_alert_box(time, speed){
+        time = new Date(time*1000)
+        time = time.toString()
+        area = document.getElementById("alert_area");
+        area.innerHTML = '';
+        tag = document.createElement("div");
+        tag.classList.add('alert');
+        tag.innerHTML = `Time: ${time} | Speed: ${speed}`;
+        area.prepend(tag);
+    }
+
+    $(document).ready(function () {
+    var last_speed = 0;
+    var speed_chart = $('#container').highcharts('StockChart', {
+        chart: {
+            events: {
+                load: function () {
+                    var series = this.series[0];
+                    // Getting data
+                    setInterval(() => {
+                        current_time = current_time + TIME_INTERVAL * 1000;
+                        let payload = {
+                            time: current_time / 1000,
+                            driverID: '{{ driverID|escapejs }}'
+                        };
+                        $.getJSON("/api/data", payload, (response) => {
+                            console.log(response);
+                            if (response.speed.length === 0) {
+                                series.addPoint([response.time * 1000, last_speed]);
+                            } else {
+                                response.speed.forEach(element => {
+                                    series.addPoint([element.unix_Time * 1000, element.speed]);
+                                    last_speed = element.speed;
+
+                                    if (element.isOverspeed) {
+                                        console.log("overspeed");
+                                        add_alert_box(element.unix_Time, element.speed);
+                                    }
+                                });
+                            }
+                        });
+                    }, TIME_INTERVAL * 1000);
+                }
+            }
+        },
+        rangeSelector: {
+            selected: 1
+        },
+        title: {
+            text: 'Real-Time Monitor of ' + '{{ driverID }}'
+        },
+        series: [{
+            name: 'Real-time Number',
+            pointStart: current_time,
+            data: [last_speed],
+            tooltip: {
+                valueDecimals: 2
+            }
+        }]
+    });
+});
+</script>
+{% endblock %}
+
+
