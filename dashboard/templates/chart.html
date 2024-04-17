@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load filters %}
+{% load static %}
+
+{% block title %}
+<title>All Driver</title>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/user.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block main %}
+{% for i in sum %}
+<div class="card">
+    <canvas id="{{names|indexed:forloop.counter}}"></canvas>
+</div>
+<script>
+    const ctx{{forloop.counter}} = document.getElementById('{{names|indexed:forloop.counter}}');
+
+    new Chart(ctx{{forloop.counter}}, {
+        type: 'bar',
+        data: {
+            labels: {% autoescape off %}{{ drivers }}{% endautoescape %},
+        datasets: [{
+            label: '{{names|indexed:forloop.counter}}',
+            data: {{ i }},
+        borderWidth: 1
+        }]
+      },
+        options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+    });
+</script>
+{% endfor %}
+{% endblock %}

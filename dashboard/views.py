@@ -6,7 +6,6 @@ from .models import DriveData
 
 from django.db.models import Sum
 
-
 def index(request):
     return render(request, 'index.html')
 
@@ -40,6 +39,35 @@ def choose_page(request):
     drivers = Summary.objects.values('driverID', 'carPlateNumber').distinct().order_by("driverID")
     context = {'driver_list': drivers}
     return render(request, 'driver.html', context)
+
+
+def graph_page(request):
+    summary = Summary.objects.values("driverID").annotate(
+        total_number_of_overspeed=Sum('number_of_overspeed'),
+        total_overspeed=Sum('total_overspeed'),
+        total_number_of_fatigue_driving=Sum('number_of_fatigueDriving'),
+        total_neutral_slide=Sum('number_of_neutralSlide'),
+        total_neutral_slide_time=Sum('total_neutralSlideTime')
+    ).order_by("driverID")
+    ids = []
+    overspeed = []
+    overspeed_time = []
+    fatigue_driving = []
+    neutral_slide = []
+    neutral_slide_time = []
+    for i in summary:
+        driver = dict(i)
+        print(driver)
+        ids.append(driver["driverID"])
+        overspeed.append(driver['total_number_of_overspeed'])
+        overspeed_time.append(driver['total_overspeed'])
+        fatigue_driving.append(driver['total_number_of_fatigue_driving'])
+        neutral_slide.append(driver['total_neutral_slide'])
+        neutral_slide_time.append(driver['total_neutral_slide_time'])
+    names = ['total_number_of_overspeed', 'total_number_of_overspeed_time', 'total_number_of_fatigue_driving', 'total_number_of_neutral_slide', 'total_number_of_neutral_slide_time']
+    sums = [overspeed, overspeed_time, fatigue_driving, neutral_slide, neutral_slide_time]
+    print(sums)
+    return render(request, 'chart.html', {"sum": sums, "drivers": ids, "names": names})
 
 
 def monitor_data(request):

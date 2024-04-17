@@ -2,38 +2,35 @@
 {% load static %}
 
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/user.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/user.css' %}">
 {% endblock %}
 
 {% block main %}
-    <div id="pageHeading">
-        <p>Summary Report</p>
-    </div>
-
-    <div class="container">
-        <div class="bg-light p-5 rounded">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Driver ID</th>
-                        <th>Car Plate Value</th>
-                        <th>Total Number of Overspeed</th>
-                        <th>Total Overspeed Time</th>
-                        <th>Total Number of Fatigue Driving</th>
-                        <th>Total Number of Neutral Slide</th>
-                        <th>Total Neutral Slide Time</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for row in summary %}
-                    <tr>
-                        {% for data in row %}
-                        <td>{{ data }}</td>
-                        {% endfor %}
-                    </tr>
+<div class="card m-5 p-3">
+    <h1 class="card-title mt-2 text-center">Summary Report</h1>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Driver ID</th>
+                    <th>Car Plate Value</th>
+                    <th>Total Number of Overspeed</th>
+                    <th>Total Overspeed Time</th>
+                    <th>Total Number of Fatigue Driving</th>
+                    <th>Total Number of Neutral Slide</th>
+                    <th>Total Neutral Slide Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in summary %}
+                <tr>
+                    {% for data in row %}
+                    <td scope="row">{{ data }}</td>
                     {% endfor %}
-                </tbody>
-            </table>
-        </div>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
+</div>
 {% endblock %}
