@@ -8,6 +8,8 @@ class DriveData(models.Model):
     speed = models.FloatField()
     isOverspeed = models.IntegerField()
 
+    class Meta:
+        db_table = 'drivedata'
 
 class Summary(models.Model):
     driverID = models.CharField(max_length=100)
