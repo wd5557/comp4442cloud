@@ -12,31 +12,37 @@
 {% endblock %}
 
 {% block main %}
-{% for i in sum %}
-<div class="card">
-    <canvas id="{{names|indexed:forloop.counter}}"></canvas>
-</div>
-<script>
-    const ctx{{forloop.counter}} = document.getElementById('{{names|indexed:forloop.counter}}');
+<script>Chart.register(Chart.Colors);</script>
+<div class="card m-3">
+    <div class="row justify-content-center">
+        {% for i in sum %}
+        <div class="card col-6 -m">
+            <canvas id="{{names|indexed:forloop.counter}}"></canvas>
+        </div>
+        <script>
+            const ctx{{ forloop.counter }} = document.getElementById('{{names|indexed:forloop.counter}}');
 
-    new Chart(ctx{{forloop.counter}}, {
-        type: 'bar',
-        data: {
-            labels: {% autoescape off %}{{ drivers }}{% endautoescape %},
-        datasets: [{
-            label: '{{names|indexed:forloop.counter}}',
-            data: {{ i }},
-        borderWidth: 1
+            new Chart(ctx{{ forloop.counter }}, {
+                type: 'bar',
+                data: {
+                    labels: {% autoescape off %}{{ drivers }}{% endautoescape %},
+                datasets: [{
+                    label: '{{names|indexed:forloop.counter}}',
+                    data: {{ i }},
+                    backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)'],
+                borderWidth: 1
         }]
       },
-        options: {
-        scales: {
-            y: {
-                beginAtZero: true
+                options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
             }
-        }
-    }
     });
-</script>
-{% endfor %}
+        </script>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
