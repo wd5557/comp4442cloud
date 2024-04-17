@@ -126,6 +126,17 @@
     align-items: center;
 }
 
+/* Styles for the date selection area */
+#dateFilter {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f8f9fa; /* Light gray background */
+    border-radius: 8px; /* Rounded corners */
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
 #dateFilter label {
     font-weight: bold; /* Makes the text bold */
     margin-right: 10px; /* Adds space between the label and the select element */

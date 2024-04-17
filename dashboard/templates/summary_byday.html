@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load filters %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/user.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block main %}
+<div id="dateFilter">
+<label for="date-select">Choose a date:</label>
+<select id="date-select" onchange="filterByDate(this.value)">
+    {% for date in dates %}
+    <option value="{{ date }}">{{ date }}</option>
+    {% endfor %}
+</select>
+
+<div class="card m-5 p-3">
+    <h1 class="card-title mt-2 text-center">Summary Report By Daily</h1>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Driver ID</th>
+                    <th>Car Plate Value</th>
+                    <th>Date</th>
+                    <th>Average Speed</th>
+                    <th>Total Times of Overspeed</th>
+                    <th>Total Duration of Overspeed </th>
+                    <th>Total Times of Fatigue Driving</th>
+                    <th>Total Times of Neutral Slide</th>
+                    <th>Total Duration of Neutral Slide</th>
+                </tr>
+            </thead>
+            <tbody>
+                 {% for row in summaryday %}
+                <tr>
+                    {% for data in row %}
+                    <td scope="row">{{ data }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+{% endblock %}

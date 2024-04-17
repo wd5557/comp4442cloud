@@ -32,6 +32,19 @@ def summary_page(request):
         "total_neutral_slide_time"
     )
 
+    summary_day = Summary.objects.all().order_by("driverID")
+
+    summaryday = summary_day.values_list(
+        "driverID",
+        "carPlateNumber",
+        "speed",
+        "number_of_overspeed",
+        "total_overspeed",
+        "number_of_fatigueDriving",
+        "number_of_neutralSlide",
+        "total_neutralSlideTime"
+    )
+
     summary = Summary.objects.values("driverID").annotate(
         total_number_of_overspeed=Sum('number_of_overspeed'),
         total_overspeed=Sum('total_overspeed'),
@@ -60,6 +73,7 @@ def summary_page(request):
 
     context = {
         'summary': summarys,
+        'summaryday': summaryday,
         "sum": sums,
         "drivers": ids,
         "names": names
@@ -67,6 +81,28 @@ def summary_page(request):
 
     return render(request, 'summary_report.html', context)
 
+def summary_byday(request):
+    date = Summary.objects.values_list('date', flat=True).distinct().order_by("date")
+    summary_day = Summary.objects.all().order_by("driverID")
+
+    summaryday = summary_day.values_list(
+        "driverID",
+        "carPlateNumber",
+        "date",
+        "speed",
+        "number_of_overspeed",
+        "total_overspeed",
+        "number_of_fatigueDriving",
+        "number_of_neutralSlide",
+        "total_neutralSlideTime"
+    )
+
+    context = {
+        'summaryday': summaryday,
+        'dates': date,
+    }
+
+    return render(request, 'summary_byday.html', context)
 
 def choose_page(request):
     drivers = Summary.objects.values('driverID', 'carPlateNumber').distinct().order_by("driverID")
