@@ -47,12 +47,14 @@ def summary_page(request):
 
     summary = Summary.objects.values("driverID").annotate(
         total_number_of_overspeed=Sum('number_of_overspeed'),
+        speed=Avg('speed'),
         total_overspeed=Sum('total_overspeed'),
         total_number_of_fatigue_driving=Sum('number_of_fatigueDriving'),
         total_neutral_slide=Sum('number_of_neutralSlide'),
         total_neutral_slide_time=Sum('total_neutralSlideTime')
     ).order_by("driverID")
     ids = []
+    avgspeed = []
     overspeed = []
     overspeed_time = []
     fatigue_driving = []
@@ -62,21 +64,23 @@ def summary_page(request):
         driver = dict(i)
 
         ids.append(driver["driverID"])
+        avgspeed.append(driver['speed'])
         overspeed.append(driver['total_number_of_overspeed'])
         overspeed_time.append(driver['total_overspeed'])
         fatigue_driving.append(driver['total_number_of_fatigue_driving'])
         neutral_slide.append(driver['total_neutral_slide'])
         neutral_slide_time.append(driver['total_neutral_slide_time'])
-    names = ['Total Times of Overspeed', 'Total Duration of Overspeed', 'Total Times of Fatigue Driving',
+    names = ['Avg Speed', 'Total Times of Overspeed', 'Total Duration of Overspeed', 'Total Times of Fatigue Driving',
              'Total Times of Neutral Slide', 'Total Duration of Neutral Slide']
-    sums = [overspeed, overspeed_time, fatigue_driving, neutral_slide, neutral_slide_time]
+    charts = ["bar", "doughnut", "bar", "pie", "doughnut", "bar"]
+    sums = [avgspeed, overspeed, overspeed_time, fatigue_driving, neutral_slide, neutral_slide_time]
 
     context = {
         'summary': summarys,
-        'summaryday': summaryday,
         "sum": sums,
         "drivers": ids,
-        "names": names
+        "names": names,
+        "charts": charts
     }
 
     return render(request, 'summary_report.html', context)

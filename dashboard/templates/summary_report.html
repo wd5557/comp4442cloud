@@ -37,49 +37,6 @@
     </div>
 </div>
 
-<div id="dateFilter">
-<label for="date-select">Choose a date:</label>
-<select id="date-select" onchange="filterByDate(this.value)">
-    <option value="All">All</option>
-    {% for date in dates %}
-    <option value="{{ date }}">{{ date }}</option>
-    {% endfor %}
-</select>
-
-<div class="card m-5 p-3">
-    <h1 class="card-title mt-2 text-center">Summary Report By Daily</h1>
-    <div class="card-body">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Driver ID</th>
-                    <th>Car Plate Value</th>
-                    <th>Average Speed</th>
-                    <th>Total Times of Overspeed</th>
-                    <th>Total Duration of Overspeed </th>
-                    <th>Total Times of Fatigue Driving</th>
-                    <th>Total Times of Neutral Slide</th>
-                    <th>Total Duration of Neutral Slide</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for summaryd in summaryday %}
-                <tr>
-                    <td>{{ summaryd.driverID }}</td>
-                    <td>{{ summaryd.carPlateNumber }}</td>
-                    <td>{{ summaryd.speed }}</td>
-                    <td>{{ summaryd.number_of_overspeed }}</td>
-                    <td>{{ summaryd.total_overspeed }}</td>
-                    <td>{{ summaryd.number_of_fatigueDriving }}</td>
-                    <td>{{ summaryd.number_of_neutralSlide }}</td>
-                    <td>{{ summaryd.total_neutralSlideTime }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
-
 <script>Chart.register(Chart.Colors);</script>
 <div class="card m-3">
     <div class="row justify-content-center">
@@ -91,7 +48,7 @@
             const ctx{{ forloop.counter }} = document.getElementById('{{names|indexed:forloop.counter}}');
 
             new Chart(ctx{{ forloop.counter }}, {
-                type: 'bar',
+                type: '{{charts|indexed:forloop.counter}}',
                 data: {
                     labels: {% autoescape off %}{{ drivers }}{% endautoescape %},
                 datasets: [{
