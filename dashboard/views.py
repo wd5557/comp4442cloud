@@ -65,8 +65,8 @@ def graph_page(request):
         fatigue_driving.append(driver['total_number_of_fatigue_driving'])
         neutral_slide.append(driver['total_neutral_slide'])
         neutral_slide_time.append(driver['total_neutral_slide_time'])
-    names = ['total_number_of_overspeed', 'total_number_of_overspeed_time', 'total_number_of_fatigue_driving',
-             'total_number_of_neutral_slide', 'total_number_of_neutral_slide_time']
+    names = ['Total Times of Overspeed', 'Total Duration of Overspeed', 'Total Times of Fatigue Driving',
+             'Total Times of Neutral Slide', 'Total Duration of Neutral Slide']
     sums = [overspeed, overspeed_time, fatigue_driving, neutral_slide, neutral_slide_time]
     print(sums)
     return render(request, 'chart.html', {"sum": sums, "drivers": ids, "names": names})
