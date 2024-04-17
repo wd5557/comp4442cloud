@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from .models import Summary
 from .models import DriveData
 
-from django.db.models import Sum
+from django.db.models import Sum, Avg
 
 
 def index(request):
@@ -13,6 +13,7 @@ def index(request):
 
 def summary_page(request):
     summary_df = Summary.objects.values("driverID", "carPlateNumber").annotate(
+        avg_speed=Avg('speed'),
         total_number_of_overspeed=Sum('number_of_overspeed'),
         total_overspeed=Sum('total_overspeed'),
         total_number_of_fatigue_driving=Sum('number_of_fatigueDriving'),
@@ -23,6 +24,7 @@ def summary_page(request):
     summary = summary_df.values_list(
         "driverID",
         "carPlateNumber",
+        "avg_speed",
         "total_number_of_overspeed",
         "total_overspeed",
         "total_number_of_fatigue_driving",
@@ -30,19 +32,6 @@ def summary_page(request):
         "total_neutral_slide_time"
     )
 
-    context = {
-        'summary': summary,
-    }
-    return render(request, 'summary_report.html', context)
-
-
-def choose_page(request):
-    drivers = Summary.objects.values('driverID', 'carPlateNumber').distinct().order_by("driverID")
-    context = {'driver_list': drivers}
-    return render(request, 'driver.html', context)
-
-
-def graph_page(request):
     summary = Summary.objects.values("driverID").annotate(
         total_number_of_overspeed=Sum('number_of_overspeed'),
         total_overspeed=Sum('total_overspeed'),
@@ -58,7 +47,7 @@ def graph_page(request):
     neutral_slide_time = []
     for i in summary:
         driver = dict(i)
-        print(driver)
+
         ids.append(driver["driverID"])
         overspeed.append(driver['total_number_of_overspeed'])
         overspeed_time.append(driver['total_overspeed'])
@@ -68,8 +57,22 @@ def graph_page(request):
     names = ['Total Times of Overspeed', 'Total Duration of Overspeed', 'Total Times of Fatigue Driving',
              'Total Times of Neutral Slide', 'Total Duration of Neutral Slide']
     sums = [overspeed, overspeed_time, fatigue_driving, neutral_slide, neutral_slide_time]
-    print(sums)
-    return render(request, 'chart.html', {"sum": sums, "drivers": ids, "names": names})
+
+    context = {
+        'summary': summary,
+        "sum": sums,
+        "drivers": ids,
+        "names": names
+    }
+
+    return render(request, 'summary_report.html', context)
+
+
+def choose_page(request):
+    drivers = Summary.objects.values('driverID', 'carPlateNumber').distinct().order_by("driverID")
+    context = {'driver_list': drivers}
+    return render(request, 'driver.html', context)
+
 
 
 def monitor_data(request):

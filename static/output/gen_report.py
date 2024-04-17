@@ -43,7 +43,8 @@ summary = df.groupBy("driverID", "carPlateNumber", F.to_date("Time").alias("Date
     F.sum("overspeedTime").alias("total_overspeed"),
     F.sum("isFatigueDriving").alias("number_of_fatigueDriving"),
     F.sum("isNeutralSlide").alias("number_of_neutralSlide"),
-    F.sum("neutralSlideTime").alias("total_neutralSlideTime")
+    F.sum("neutralSlideTime").alias("total_neutralSlideTime"),
+    F.avg("Speed").alias("average_speed")
 ).orderBy("Date")
 
 summary.write.mode("overwrite").option("header", "true").csv(output_filePath)

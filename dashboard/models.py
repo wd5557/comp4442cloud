@@ -20,6 +20,7 @@ class Summary(models.Model):
     number_of_fatigueDriving = models.IntegerField()
     number_of_neutralSlide = models.IntegerField()
     total_neutralSlideTime = models.IntegerField()
+    speed = models.FloatField()
 
     class Meta:
         db_table = 'summary'
