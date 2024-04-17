@@ -12,7 +12,7 @@
     <h1 class="card-title mt-2 text-center">Summary Report</h1>
     <div class="card-body">
         <table class="table table-striped">
-            <thead>
+            <thead class="table-active">
                 <tr>
                     <th>Driver ID</th>
                     <th>Car Plate Value</th>
@@ -28,7 +28,7 @@
                 {% for row in summary %}
                 <tr>
                     {% for data in row %}
-                    <td scope="row">{{ data }}</td>
+                    <td scope="row">{{ data|rounded }}</td>
                     {% endfor %}
                 </tr>
                 {% endfor %}

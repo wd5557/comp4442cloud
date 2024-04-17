@@ -8,48 +8,44 @@
 {% endblock %}
 
 {% block main %}
-<div id="dateFilter">
-    <label for="date-select">Choose a date:</label>
-    <select id="date-select" onchange="filterByDate(this.value)">
-        {% for date in dates %}
-        <option value="{{ date }}">{{ date }}</option>
-        {% endfor %}
-    </select>
-
-    <div class="card m-5 p-3">
-        <h1 class="card-title mt-2 text-center">Summary Report By Daily</h1>
-        <div class="card-body">
-            <table id="driver_summary" class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Driver ID</th>
-                        <th>Car Plate Value</th>
-                        <th>Date</th>
-                        <th>Average Speed</th>
-                        <th>Total Times of Overspeed</th>
-                        <th>Total Duration of Overspeed </th>
-                        <th>Total Times of Fatigue Driving</th>
-                        <th>Total Times of Neutral Slide</th>
-                        <th>Total Duration of Neutral Slide</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for row in summaryday %}
-                        <tr>
-                            <td>{{ row.0 }}</td>
-                            <td>{{ row.1 }}</td>
-                            <td>{{ row.2 }}</td>
-                            <td>{{ row.3 }}</td>
-                            <td>{{ row.4 }}</td>
-                            <td>{{ row.5 }}</td>
-                            <td>{{ row.6 }}</td>
-                            <td>{{ row.7 }}</td>
-                            <td>{{ row.8 }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+<div class="card m-5 p-3">
+    <div class="row">
+        <div class="col-3"></div>
+        <h1 class="card-title mt-2 text-center col-6">Summary Report By Daily</h1>
+        <div class="col-3">
+            <label for="form-select">Choose a date:</label>
+            <select class="form-select" onchange="filterByDate(this.value)">
+                {% for date in dates %}
+                <option value="{{ date }}">{{ date }}</option>
+                {% endfor %}
+            </select>
         </div>
+    </div>
+    <div class="card-body">
+        <table id="driver_summary" class="table table-bordered">
+            <thead class="table-active">
+                <tr>
+                    <th scope="col">Driver ID</th>
+                    <th scope="col">Car Plate Value</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Average Speed</th>
+                    <th scope="col">Total Times of Overspeed</th>
+                    <th scope="col">Total Duration of Overspeed </th>
+                    <th scope="col">Total Times of Fatigue Driving</th>
+                    <th scope="col">Total Times of Neutral Slide</th>
+                    <th scope="col">Total Duration of Neutral Slide</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in summaryday %}
+                <tr>
+                    {% for c in row %}
+                        <td scope="col">{{ c|rounded }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -77,5 +73,6 @@
             }
         }
     }
+    filterByDate(currentdate)
 </script>
 {% endblock %}
