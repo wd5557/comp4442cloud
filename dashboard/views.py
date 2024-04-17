@@ -59,7 +59,7 @@ def summary_page(request):
     sums = [overspeed, overspeed_time, fatigue_driving, neutral_slide, neutral_slide_time]
 
     context = {
-        'summarys': summarys,
+        'summary': summarys,
         "sum": sums,
         "drivers": ids,
         "names": names
