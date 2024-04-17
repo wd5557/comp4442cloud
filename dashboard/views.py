@@ -41,7 +41,10 @@ def summary_page(request):
         "total_neutral_slide_time"
     )
 
-    return render(request, 'summary_report.html', {'summary': summary})
+    context = {
+        'summary': summary,
+    }
+    return render(request, 'summary_report.html', context)
 
 
 def choose_page(request):

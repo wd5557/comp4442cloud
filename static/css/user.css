@@ -2,8 +2,9 @@
 .user-list {
     margin: 20px;
     padding: 10px;
-    background-color: #666666; /* Set the background color to #666666 */
+    background-color: #4D4D4D; /* Dark grey background for contrast */
     border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* subtle shadow for depth */
 }
 
 .user-detail,
@@ -11,36 +12,143 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #ddd; /* lighter border color for subtlety */
     padding: 10px;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect, including color */
+}
+
+.user-detail { /* Header styles */
+    background-color: #666666; /* Slightly lighter than list background */
+    color: #FFFFFF;
+}
+
+.user-info:hover {
+    background-color: #575757; /* Lighter on hover for interactivity */
+    color: #000000; /* Change text color to black on hover */
 }
 
 .user-count,
 .user-username,
 .user-email {
     margin: 0;
-    color: #FFFFFF; /* Set the text color to #FFFFFF */
+    color: #FFFFFF; /* White text for readability */
+    padding: 0 10px; /* Padding for spacing */
+    transition: color 0.3s; /* Transition for color change on hover */
 }
 
 .user-count {
-    min-width: 50px; /* Ensures enough space for 'No.' and the count */
-    text-align: left;
+    width: 50px; /* Fixed width for alignment */
+    text-align: center;
 }
 
 .user-username {
     flex-grow: 1;
     text-align: left;
-    margin-left: 10%;
 }
 
 .user-email {
     flex-grow: 1;
     text-align: right;
     font-style: italic;
-    margin-right:20%;
 }
 
 .user-heading {
     font-weight: bold;
     text-transform: uppercase;
+    letter-spacing: 0.05em; /* Spacing out letters for better legibility */
+}
+
+.table th, .table td {
+    text-align: center;
+}
+
+
+
+/* Style for overall container of date selection */
+#dateFilter {
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+/* Style for the label of the date selection */
+#dateFilter label {
+    font-size: 16px;
+    margin-right: 10px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Style for the select dropdown */
+#date-select {
+    padding: 8px 12px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Style the options inside the dropdown */
+#date-select option {
+    padding: 10px;
+}
+
+/* Hover and focus styles for the dropdown */
+#date-select:hover, #date-select:focus {
+    border-color: #888;
+    outline: none;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+    #dateFilter {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #date-select {
+        width: 100%;
+        box-sizing: border-box; /* Makes sure padding does not affect the width */
+    }
+}
+
+/* Styles for the date selection area */
+#dateFilter {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f8f9fa; /* Light gray background */
+    border-radius: 8px; /* Rounded corners */
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+#dateFilter label {
+    font-weight: bold; /* Makes the text bold */
+    margin-right: 10px; /* Adds space between the label and the select element */
+    color: #333; /* Dark gray text color for better readability */
+}
+
+#date-select {
+    padding: 8px 12px; /* Padding inside the select box */
+    border: 1px solid #ced4da; /* Light gray border */
+    border-radius: 4px; /* Rounded corners for the select box */
+    background-color: #fff; /* White background for the select box */
+    color: #495057; /* Dark gray color for the text */
+    font-size: 16px; /* Increased font size for better readability */
+    cursor: pointer; /* Changes the cursor to a pointer when hovering over the select box */
+}
+
+/* Hover effect for select box */
+#date-select:hover {
+    border-color: #adb5bd; /* Changes the border color on hover */
+}
+
+/* Focus effect for select box */
+#date-select:focus {
+    outline: none; /* Removes the default focus outline */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Adds a blue glow when the select box is focused */
 }

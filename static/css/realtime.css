@@ -1,0 +1,64 @@
+/* General container styles */
+.container {
+    width: 100%;
+    padding: 20px;
+}
+
+/* Light background container with rounded corners */
+.bg-light {
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+    padding: 20px;
+}
+
+/* Alert box styling */
+.alert {
+    color: #842029;
+    background-color: #f8d7da;
+    border-color: #f5c2c7;
+    position: relative;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+
+/* Placeholder image styling */
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+/* Button styling */
+.btn-secondary {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+/* Page heading */
+#pageHeading p {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Highcharts container */
+#container {
+    min-width: 310px;
+    height: 400px;
+    margin: 0 auto;
+}
+
+/* Flex container for buttons */
+.d-grid {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.d-md-flex {
+    display: flex;
+    justify-content: flex-end;
+}

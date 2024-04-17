@@ -1,33 +1,39 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block css %}
-	<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/user.css' %}">
 {% endblock %}
+
 {% block main %}
-	<div class="container">
+    <div id="pageHeading">
+        <p>Summary Report</p>
+    </div>
+
+    <div class="container">
         <div class="bg-light p-5 rounded">
-            <div>
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <th style="text-align:center">Driver ID</th>
-                        <th style="text-align:center">Car Plate Value</th>
-                        <th style="text-align:center">Number of overspeed</th>
-                        <th style="text-align:center">Overspeed</th>
-                        <th style="text-align:center">Number of fatigue driving</th>
-                        <th style="text-align:center">Number of neutral slide</th>
-                        <th style="text-align:center">Total neutral slide time</th>
-                    </thead>
-                    <tbody>
-                        {% for row in summary %}
-                        <tr>
-                            {% for data in row %}
-                            <td style="text-align:center">{{ data }}</td>
-                            {% endfor %}
-                        </tr>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Driver ID</th>
+                        <th>Car Plate Value</th>
+                        <th>Total Number of Overspeed</th>
+                        <th>Total Overspeed Time</th>
+                        <th>Total Number of Fatigue Driving</th>
+                        <th>Total Number of Neutral Slide</th>
+                        <th>Total Neutral Slide Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in summary %}
+                    <tr>
+                        {% for data in row %}
+                        <td>{{ data }}</td>
                         {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-          </div>
-      </div>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}
