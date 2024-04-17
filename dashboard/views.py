@@ -21,7 +21,7 @@ def summary_page(request):
         total_neutral_slide_time=Sum('total_neutralSlideTime')
     ).order_by("driverID")
 
-    summary = summary_df.values_list(
+    summarys = summary_df.values_list(
         "driverID",
         "carPlateNumber",
         "avg_speed",
@@ -59,7 +59,7 @@ def summary_page(request):
     sums = [overspeed, overspeed_time, fatigue_driving, neutral_slide, neutral_slide_time]
 
     context = {
-        'summary': summary,
+        'summarys': summarys,
         "sum": sums,
         "drivers": ids,
         "names": names
