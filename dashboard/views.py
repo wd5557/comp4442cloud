@@ -99,7 +99,7 @@ def summary_byday(request):
         "number_of_fatigueDriving",
         "number_of_neutralSlide",
         "total_neutralSlideTime"
-    )
+    ).order_by("driverID")
 
     context = {
         'summaryday': summaryday,

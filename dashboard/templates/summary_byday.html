@@ -9,41 +9,73 @@
 
 {% block main %}
 <div id="dateFilter">
-<label for="date-select">Choose a date:</label>
-<select id="date-select" onchange="filterByDate(this.value)">
-    {% for date in dates %}
-    <option value="{{ date }}">{{ date }}</option>
-    {% endfor %}
-</select>
+    <label for="date-select">Choose a date:</label>
+    <select id="date-select" onchange="filterByDate(this.value)">
+        {% for date in dates %}
+        <option value="{{ date }}">{{ date }}</option>
+        {% endfor %}
+    </select>
 
-<div class="card m-5 p-3">
-    <h1 class="card-title mt-2 text-center">Summary Report By Daily</h1>
-    <div class="card-body">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Driver ID</th>
-                    <th>Car Plate Value</th>
-                    <th>Date</th>
-                    <th>Average Speed</th>
-                    <th>Total Times of Overspeed</th>
-                    <th>Total Duration of Overspeed </th>
-                    <th>Total Times of Fatigue Driving</th>
-                    <th>Total Times of Neutral Slide</th>
-                    <th>Total Duration of Neutral Slide</th>
-                </tr>
-            </thead>
-            <tbody>
-                 {% for row in summaryday %}
-                <tr>
-                    {% for data in row %}
-                    <td scope="row">{{ data }}</td>
+    <div class="card m-5 p-3">
+        <h1 class="card-title mt-2 text-center">Summary Report By Daily</h1>
+        <div class="card-body">
+            <table id="driver_summary" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Driver ID</th>
+                        <th>Car Plate Value</th>
+                        <th>Date</th>
+                        <th>Average Speed</th>
+                        <th>Total Times of Overspeed</th>
+                        <th>Total Duration of Overspeed </th>
+                        <th>Total Times of Fatigue Driving</th>
+                        <th>Total Times of Neutral Slide</th>
+                        <th>Total Duration of Neutral Slide</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in summaryday %}
+                        <tr>
+                            <td>{{ row.0 }}</td>
+                            <td>{{ row.1 }}</td>
+                            <td>{{ row.2 }}</td>
+                            <td>{{ row.3 }}</td>
+                            <td>{{ row.4 }}</td>
+                            <td>{{ row.5 }}</td>
+                            <td>{{ row.6 }}</td>
+                            <td>{{ row.7 }}</td>
+                            <td>{{ row.8 }}</td>
+                        </tr>
                     {% endfor %}
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
-</div>
+
+<script>
+    var currentdate = "Jan. 1, 2017";
+
+    function filterByDate(date) {
+        currentdate = date;
+        applyFilters();
+    }
+
+    function applyFilters() {
+        var table, tr, i, dateTd;
+        table = document.getElementById('driver_summary');
+        tr = table.getElementsByTagName('tr');
+
+        for (i = 1; i < tr.length; i++) {
+            dateTd = tr[i].getElementsByTagName('td')[2];
+            if (dateTd) {
+                if (dateTd.innerText === currentdate) {
+                    tr[i].style.display = '';
+                } else {
+                    tr[i].style.display = 'none';
+                }
+            }
+        }
+    }
+</script>
 {% endblock %}
